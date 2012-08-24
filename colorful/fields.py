@@ -5,7 +5,7 @@ from django.forms.fields import RegexField
 
 from widgets import ColorFieldWidget
 
-RGB_REGEX = re.compile('^#?(\d+\,\ \d+\,\ \d+)$', re.IGNORECASE)
+RGB_REGEX = re.compile('^#?(\d+\,\ ?\d+\,\ ?\d+)$', re.IGNORECASE)
 
 class RGBColorField(CharField):
 

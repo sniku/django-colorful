@@ -20,14 +20,15 @@ class ColorFieldWidget(TextInput):
 
     input_type = 'color'
 
-    def render_script(self, id):
+    def render_script(self, id, value):
+        rgv_val = ", ".join([x+y for x,y in zip(['r:','g:','b:'], value.split(','))])
         return u'''<script type="text/javascript">
                     (function($){
                         $(document).ready(function(){
 
                             $('#%(id)s').each(function(i, elm){
                                 $(this).ColorPicker({
-                                    color: '#0000ff',
+                                    color: {%(value)s },
                                     onShow: function (colpkr) {
                                         $(colpkr).fadeIn(500);
                                         return false;
@@ -52,10 +53,10 @@ class ColorFieldWidget(TextInput):
                         });
                     })('django' in window ? django.jQuery: jQuery);
                 </script>
-                ''' % {'id': id}
+                ''' % {'id': id, 'value': rgv_val}
 
     def render(self, name, value, attrs={}):
         if not 'id' in attrs:
             attrs['id'] = "#id_%s" % name
         render = super(ColorFieldWidget, self).render(name, value, attrs)
-        return SafeUnicode(u"%s%s" % (render, self.render_script(attrs['id'])))
+        return SafeUnicode(u"%s%s" % (render, self.render_script(attrs['id'], value)))
