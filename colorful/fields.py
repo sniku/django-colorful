@@ -5,14 +5,14 @@ from django.forms.fields import RegexField
 
 from widgets import ColorFieldWidget
 
-RGB_REGEX = re.compile('^#?((?:[0-F]{3}){1,2})$', re.IGNORECASE)
+RGB_REGEX = re.compile('^#?(\d+\,\ \d+\,\ \d+)$', re.IGNORECASE)
 
 class RGBColorField(CharField):
 
     widget = ColorFieldWidget
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 7
+        kwargs['max_length'] = 13 #TODO: fix
         super(RGBColorField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):

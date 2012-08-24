@@ -14,9 +14,9 @@ except AttributeError:
 class ColorFieldWidget(TextInput):
     class Media:
         css = {
-            'all': ("%scolorful/colorPicker.css" % url,)
+            'all': ("%scolorful/css/colorpicker.css" % url, )
         }
-        js  = ("%scolorful/jQuery.colorPicker.js" % url,)
+        js  = ("%scolorful/js/colorpicker.js" % url, )
 
     input_type = 'color'
 
@@ -24,14 +24,35 @@ class ColorFieldWidget(TextInput):
         return u'''<script type="text/javascript">
                     (function($){
                         $(document).ready(function(){
-                            $('#%s').each(function(i, elm){
-                                // Make sure html5 color element is not replaced
-                                if (elm.type != 'color') $(elm).colorPicker();
+
+                            $('#%(id)s').each(function(i, elm){
+                                $(this).ColorPicker({
+                                    color: '#0000ff',
+                                    onShow: function (colpkr) {
+                                        $(colpkr).fadeIn(500);
+                                        return false;
+                                    },
+                                    onHide: function (colpkr) {
+                                        $(colpkr).fadeOut(500);
+                                        return false;
+                                    },
+                                    onChange: function (hsb, hex, rgb) {
+                                        //$('#colorSelector div').css('backgroundColor', '#' + hex);
+                                        //console.log(rgb);
+                                        $('#%(id)s').val(rgb.r+', '+rgb.g+', '+rgb.b);
+                                    }
+                                });
                             });
+
+
+                            //$('#%(id)s').each(function(i, elm){
+                            //    // Make sure html5 color element is not replaced
+                            //    if (elm.type != 'color') $(elm).colorPicker();
+                            //});
                         });
                     })('django' in window ? django.jQuery: jQuery);
                 </script>
-                ''' % id
+                ''' % {'id': id}
 
     def render(self, name, value, attrs={}):
         if not 'id' in attrs:
