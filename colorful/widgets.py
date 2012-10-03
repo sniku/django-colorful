@@ -21,7 +21,7 @@ class ColorFieldWidget(TextInput):
     input_type = 'color'
 
     def render_script(self, id, value):
-        rgv_val = ", ".join([x+y for x,y in zip(['r:','g:','b:'], value.split(','))])
+        rgv_val = ", ".join([x+y for x,y in zip(['r:','g:','b:'], value.split(','))]) if value else ''
         return u'''<script type="text/javascript">
                     (function($){
                         $(document).ready(function(){
