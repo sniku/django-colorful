@@ -46,10 +46,10 @@ class ColorFieldWidget(TextInput):
                             });
 
 
-                            //$('#%(id)s').each(function(i, elm){
-                            //    // Make sure html5 color element is not replaced
-                            //    if (elm.type != 'color') $(elm).colorPicker();
-                            //});
+                            $('#%(id)s').each(function(i, elm){
+                                // Make sure html5 color element is not replaced
+                                if (elm.type != 'color') $(elm).ColorPicker();
+                            });
                         });
                     })('django' in window ? django.jQuery: jQuery);
                 </script>
