@@ -18,7 +18,7 @@ class ColorFieldWidget(TextInput):
         }
         js  = ("%scolorful/js/colorpicker.js" % url, )
 
-    input_type = 'color'
+    input_type = 'text'
 
     def render_script(self, id, value):
         rgv_val = ", ".join([x+y for x,y in zip(['r:','g:','b:'], value.split(','))]) if value else ''
@@ -28,7 +28,7 @@ class ColorFieldWidget(TextInput):
 
                             $('#%(id)s').each(function(i, elm){
                                 $(this).ColorPicker({
-                                    color: {%(value)s },
+                                    color: { %(value)s },
                                     onShow: function (colpkr) {
                                         $(colpkr).fadeIn(500);
                                         return false;
@@ -39,17 +39,17 @@ class ColorFieldWidget(TextInput):
                                     },
                                     onChange: function (hsb, hex, rgb) {
                                         //$('#colorSelector div').css('backgroundColor', '#' + hex);
-                                        //console.log(rgb);
+                                        console.log(rgb);
                                         $('#%(id)s').val(rgb.r+', '+rgb.g+', '+rgb.b);
                                     }
                                 });
                             });
 
 
-                            $('#%(id)s').each(function(i, elm){
-                                // Make sure html5 color element is not replaced
-                                if (elm.type != 'color') $(elm).ColorPicker();
-                            });
+                            //$('#%(id)s').each(function(i, elm){
+                            // Make sure html5 color element is not replaced
+                            //    if (elm.type != 'color') $(elm).ColorPicker();
+                            //});
                         });
                     })('django' in window ? django.jQuery: jQuery);
                 </script>
